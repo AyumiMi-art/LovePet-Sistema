@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+<section class="login">
+    <h2>Login</h2>
+
+    <!-- Validações dinâmicas com EJS -->
+    <% if (locals.error) { %>
+        <div class="alert"><%= error %></div>
+    <% } %>
+    <% if (locals.success) { %>
+        <div class="alert success"><%= success %></div>
+    <% } %>
+
+    <form action="/login" method="POST">
+        <div class="input-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required placeholder="seu@email.com">
+        </div>
+        <div class="input-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required placeholder="Sua senha">
+        </div>
+        <button type="submit" class="btn">Entrar</button>
+    </form>
+
+    <a href="/cadastro" class="link">Não tem conta? Cadastre-se</a>
+</section>
+
+<%- include('partials/footer') %>
