@@ -1,29 +1,79 @@
 <%- include('partials/header') %>
 
-<section class="pagina-noticias">
-    <h2>🐾 Últimas solicitações</h2>
-    
-    <% if (noticias.length === 0) { %>
-        <!-- Se não houver notícias no banco -->
-        <div class="sem-noticias">
-            <p>Você não tem solicitações cadastradas.</p>
+<section class="pagina-contato">
+    <h2>🐾 Painel de Solicitações</h2>
+    <p>Bem-vindo, <strong><%= usuario.nome %></strong>! Selecione um animal disponível para registrar uma solicitação.</p>
+
+    <form action="/solicitacoes" method="POST" class="formulario-contato" style="margin-bottom: 2.5rem;">
+        <h3 style="margin-bottom: 1rem; color: #1a1a2e;">Nova Solicitação de Adoção</h3>
+
+        <div class="campo">
+            <label for="animal_id">Selecione o Animal Disponível:</label>
+            <select id="animal_id" name="animal_id" required>
+                <option value="">-- Escolha um animal --</option>
+                <% if (locals.animaisDisponiveis && animaisDisponiveis.length > 0) { %>
+                    <% animaisDisponiveis.forEach(pet => { %>
+                        <option value="<%= pet.animal_id %>">
+                            #<%= pet.animal_id %> - <%= pet.nome %> (<%= pet.tipo %>)
+                        </option>
+                    <% }) %>
+                <% } else { %>
+                    <option value="" disabled>Nenhum animal disponível no momento</option>
+                <% } %>
+            </select>
         </div>
+
+        <div class="campo">
+            <label for="nome_interessado">Nome do Interessado:</label>
+            <input type="text" id="nome_interessado" name="nome_interessado" required placeholder="Nome de quem quer adotar">
+        </div>
+
+        <div class="campo">
+            <label for="telefone">Telefone / WhatsApp:</label>
+            <input type="text" id="telefone" name="telefone" required placeholder="(19) 99999-9999">
+        </div>
+
+        <div class="campo">
+            <label for="mensagem">Mensagem / Observação:</label>
+            <textarea id="mensagem" name="mensagem" rows="3" placeholder="Escreva detalhes sobre a adoção..."></textarea>
+        </div>
+
+        <button type="submit" class="botao-enviar">Registrar Solicitação</button>
+    </form>
+
+    <h3 style="margin-bottom: 1rem; color: #1a1a2e;">Últimas Solicitações Registradas</h3>
+
+    <% if (!solicitacoes || solicitacoes.length === 0) { %>
+        <p class="sem-noticias">Nenhuma solicitação registrada no momento.</p>
     <% } else { %>
-        <!-- Se houver solicitações, mostra uma por uma -->
-        <div class="grid-noticias">
-            <% noticias.forEach(function(noticia) { %>
-                <article class="card-noticia">
-                    <img src="<%= noticia.imagem %>" alt="<%= noticia.titulo %>">
-                    <div class="info-noticia">
-                        <span class="categoria"><%= noticia.categoria %></span>
-                        <h3><%= noticia.titulo %></h3>
-                        <p><%= noticia.conteudo %></p>
-                        <small>
-                            Publicado em: <%= new Date(noticia.data_publicacao).toLocaleDateString('pt-BR') %>
-                        </small>
+        <div class="destaques">
+            <% solicitacoes.forEach(item => { %>
+                <div class="card">
+                    <span class="categoria"><%= item.status || 'Pendente' %></span>
+                    <h3><%= item.nome_animal ? item.nome_animal + ' (' + item.tipo_animal + ')' : 'Animal #' + item.id_animal %></h3>
+                    <p><strong>Interessado:</strong> <%= item.nome_interessado %></p>
+                    <p><strong>Telefone:</strong> <%= item.telefone %></p>
+                    <% if (item.mensagem) { %>
+                        <p style="margin-top: 0.5rem; color: #555;"><%= item.mensagem %></p>
+                    <% } %>
+
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1.2rem; flex-wrap: wrap;">
+                        <form action="/solicitacoes/atualizar/<%= item.solicitacao_id %>" method="POST">
+                            <input type="hidden" name="status" value="Aprovada">
+                            <button type="submit" style="background: #288369; color: white; border: none; padding: 0.5rem 0.9rem; border-radius: 6px; cursor: pointer;">Aprovar</button>
+                        </form>
+
+                        <form action="/solicitacoes/atualizar/<%= item.solicitacao_id %>" method="POST">
+                            <input type="hidden" name="status" value="Recusada">
+                            <button type="submit" style="background: #1A3C67; color: white; border: none; padding: 0.5rem 0.9rem; border-radius: 6px; cursor: pointer;">Recusar</button>
+                        </form>
+
+                        <form action="/solicitacoes/deletar/<%= item.solicitacao_id %>" method="POST" onsubmit="return confirm('Deseja realmente excluir esta solicitação?');">
+                            <button type="submit" style="background: #e94560; color: white; border: none; padding: 0.5rem 0.9rem; border-radius: 6px; cursor: pointer;">Excluir</button>
+                        </form>
                     </div>
-                </article>
-            <% }); %>
+                </div>
+            <% }) %>
         </div>
     <% } %>
 </section>

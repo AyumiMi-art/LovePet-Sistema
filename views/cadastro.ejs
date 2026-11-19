@@ -1,30 +1,88 @@
 <%- include('partials/header') %>
 
-<section class="login">
-    <h2>Criar Conta</h2>
+<section class="pagina-contato">
+    <h2>🐾 Cadastrar Novo Animal</h2>
+    <p>Preencha os dados do animal resgatado para disponibilizá-lo para adoção.</p>
 
-    <!-- O EJS injeta dinamicamente mensagens de erro vindas do backend -->
-    <% if (locals.error) { %>
-        <div class="alert"><%= error %></div>
+    <% if (locals.mensagem) { %>
+        <div style="background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; max-width: 600px;">
+            <%= mensagem %>
+        </div>
     <% } %>
 
-    <form action="/cadastro" method="POST">
-        <div class="input-group">
-            <label for="nome">Nome Completo</label>
-            <input type="text" id="nome" name="nome" required placeholder="Seu nome">
-        </div>
-        <div class="input-group">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" required placeholder="seu@email.com">
-        </div>
-        <div class="input-group">
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" required placeholder="Crie uma senha">
-        </div>
-        <button type="submit" class="btn">Cadastrar</button>
-    </form>
+    <form action="/contato" method="POST" class="formulario-contato">
+        <h3 style="margin-bottom: 1rem; color: #1a1a2e;">Dados Básicos</h3>
 
-    <a href="/login" class="link">Já tem uma conta? Faça login</a>
+        <div class="campo">
+            <label for="nome">Nome do Animal:</label>
+            <input type="text" id="nome" name="nome" required placeholder="Ex: Nick">
+        </div>
+
+        <div class="campo">
+            <label for="tipo">Espécie / Tipo:</label>
+            <select id="tipo" name="tipo" required>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>
+                <option value="Outro">Outro (Ave, Roedor, Réptil...)</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="raca">Raça:</label>
+            <input type="text" id="raca" name="raca" placeholder="Ex: (Vira-lata), Siamês...">
+        </div>
+
+        <div class="campo">
+            <label for="sexo">Sexo:</label>
+            <select id="sexo" name="sexo" required>
+                <option value="M">Macho (M)</option>
+                <option value="F">Fêmea (F)</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="porte">Porte:</label>
+            <select id="porte" name="porte" required>
+                <option value="Pequeno">Pequeno</option>
+                <option value="Médio">Médio</option>
+                <option value="Grande">Grande</option>
+            </select>
+        </div>
+
+        <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid #eee;">
+        <h3 style="margin-bottom: 1rem; color: #1a1a2e;">Saúde e Comportamento</h3>
+
+        <div class="campo">
+            <label for="vacinado">É vacinado?</label>
+            <select id="vacinado" name="vacinado">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="castrado">É castrado?</label>
+            <select id="castrado" name="castrado">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="sociavel">É sociável com outros animais/crianças?</label>
+            <select id="sociavel" name="sociavel">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="breve_descricao">Descrição sobre o animal:</label>
+            <textarea id="breve_descricao" name="breve_descricao" rows="3" required placeholder="Conte a personalidade, gostos e história do pet..."></textarea>
+        </div>
+
+        <button type="submit" class="botao-enviar">Salvar Animal no Sistema</button>
+    </form>
 </section>
 
 <%- include('partials/footer') %>

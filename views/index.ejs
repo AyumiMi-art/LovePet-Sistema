@@ -5,20 +5,74 @@
     <p>
         "Salvar um animal pode não mudar o mundo, mas certamente mudará o mundo daquele animal para sempre." — Karen Davison.
     </p>
+
+    <% 
+        const listaAnimais = locals.animais || [];
+        const cachorros = listaAnimais.filter(a => a.tipo && a.tipo.toLowerCase() === 'cachorro');
+        const gatos = listaAnimais.filter(a => a.tipo && a.tipo.toLowerCase() === 'gato');
+        const outros = listaAnimais.filter(a => !a.tipo || (a.tipo.toLowerCase() !== 'cachorro' && a.tipo.toLowerCase() !== 'gato'));
+    %>
+
     <div class="destaques">
+        <!-- BLOCO 1: CACHORROS -->
         <div class="card">
             <h3>🐶 Cachorros</h3>
-            <p>Viralatas amigaveis.</p>
+            <p style="margin-bottom: 1rem;">Vira-latas amigáveis.</p>
+
+            <% if (cachorros.length === 0) { %>
+                <small style="color: #888;">Nenhum cachorro disponível no momento.</small>
+            <% } else { %>
+                <% cachorros.forEach(pet => { %>
+                    <div style="border-top: 1px solid #eee; padding-top: 0.8rem; margin-top: 0.8rem;">
+                        <strong><%= pet.nome %></strong> (<%= pet.sexo === 'M' ? 'Macho' : 'Fêmea' %> • <%= pet.porte %>)<br>
+                        <small style="color: #555;"><%= pet.breve_descricao || pet.raca %></small><br>
+                        <small style="color: #288369;">
+                            Vacinado: <%= pet.vacinado ? 'Sim' : 'Não' %> | Castrado: <%= pet.castrado ? 'Sim' : 'Não' %>
+                        </small>
+                    </div>
+                <% }) %>
+            <% } %>
         </div>
+
+        <!-- BLOCO 2: GATOS -->
         <div class="card">
             <h3>🐱 Gatos</h3>
-            <p>Felinos.</p>
+            <p style="margin-bottom: 1rem;">Felinos.</p>
+
+            <% if (gatos.length === 0) { %>
+                <small style="color: #888;">Nenhum gato disponível no momento.</small>
+            <% } else { %>
+                <% gatos.forEach(pet => { %>
+                    <div style="border-top: 1px solid #eee; padding-top: 0.8rem; margin-top: 0.8rem;">
+                        <strong><%= pet.nome %></strong> (<%= pet.sexo === 'M' ? 'Macho' : 'Fêmea' %> • <%= pet.porte %>)<br>
+                        <small style="color: #555;"><%= pet.breve_descricao || pet.raca %></small><br>
+                        <small style="color: #288369;">
+                            Vacinado: <%= pet.vacinado ? 'Sim' : 'Não' %> | Castrado: <%= pet.castrado ? 'Sim' : 'Não' %>
+                        </small>
+                    </div>
+                <% }) %>
+            <% } %>
         </div>
+
+        <!-- BLOCO 3: OUTROS -->
         <div class="card">
             <h3>🦜 Outros</h3>
-            <p>Aves, répteis, aquáticos.</p>
+            <p style="margin-bottom: 1rem;">Aves, répteis, aquáticos.</p>
+
+            <% if (outros.length === 0) { %>
+                <small style="color: #888;">Nenhum outro animal disponível no momento.</small>
+            <% } else { %>
+                <% outros.forEach(pet => { %>
+                    <div style="border-top: 1px solid #eee; padding-top: 0.8rem; margin-top: 0.8rem;">
+                        <strong><%= pet.nome %></strong> (<%= pet.tipo %> • <%= pet.porte %>)<br>
+                        <small style="color: #555;"><%= pet.breve_descricao || pet.raca %></small><br>
+                        <small style="color: #288369;">
+                            Vacinado: <%= pet.vacinado ? 'Sim' : 'Não' %> | Castrado: <%= pet.castrado ? 'Sim' : 'Não' %>
+                        </small>
+                    </div>
+                <% }) %>
+            <% } %>
         </div>
     </div>
 </section>
-
 <%- include('partials/footer') %>

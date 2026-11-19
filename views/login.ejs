@@ -1,29 +1,32 @@
 <%- include('partials/header') %>
 
-<section class="login">
-    <h2>Login</h2>
+<section class="pagina-contato">
+    <h2>Entrar no Sistema</h2>
+    <p>Acesse sua conta para gerenciar as solicitações de adoção.</p>
 
-    <!-- Validações dinâmicas com EJS -->
     <% if (locals.error) { %>
-        <div class="alert"><%= error %></div>
-    <% } %>
-    <% if (locals.success) { %>
-        <div class="alert success"><%= success %></div>
+        <div style="background-color: #f8d7da; color: #721c24; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; max-width: 600px;">
+            <%= error %>
+        </div>
     <% } %>
 
-    <form action="/login" method="POST">
-        <div class="input-group">
-            <label for="email">E-mail</label>
+    <form action="/login" method="POST" class="formulario-contato">
+        <div class="campo">
+            <label for="email">E-mail:</label>
             <input type="email" id="email" name="email" required placeholder="seu@email.com">
         </div>
-        <div class="input-group">
-            <label for="senha">Senha</label>
+
+        <div class="campo">
+            <label for="senha">Senha:</label>
             <input type="password" id="senha" name="senha" required placeholder="Sua senha">
         </div>
-        <button type="submit" class="btn">Entrar</button>
-    </form>
 
-    <a href="/cadastro" class="link">Não tem conta? Cadastre-se</a>
+        <button type="submit" class="botao-enviar">Entrar</button>
+
+        <p style="margin-top: 1.2rem; font-size: 0.95rem;">
+            Ainda não tem conta? <a href="/cadastro" style="color: #e94560; font-weight: bold; text-decoration: none;">Cadastre-se</a>
+        </p>
+    </form>
 </section>
 
 <%- include('partials/footer') %>

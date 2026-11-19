@@ -13,10 +13,14 @@
         </div>
         <nav class="menu">
             <a href="/" class="<%= pagina === 'home' ? 'ativo' : '' %>">Início</a>
-            <a href="/solicitacoes" class="<%= pagina === 'noticias' ? 'ativo' : '' %>">solicitações</a>
-            <a href="/contato" class="<%= pagina === 'contato' ? 'ativo' : '' %>">Contato</a>
-            <a href="/cadastro" class="<%= pagina === 'noticias' ? 'ativo' : '' %>">Cadastre-se</a>
-            <a href="/login" class="<%= pagina === 'noticias' ? 'ativo' : '' %>">Entrar</a>
+            <a href="/solicitacoes" class="<%= pagina === 'solicitacoes' ? 'ativo' : '' %>">Solicitações</a>
+                <a href="/cadastro" class="<%= pagina === 'cadastro' ? 'ativo' : '' %>">Cadastre um animal</a>
+                <a href="/contato" class="<%= pagina === 'contato' ? 'ativo' : '' %>">Contato</a>
+            <% if (locals.usuario) { %>
+                <a href="/logout">Sair (<%= usuario.nome %>)</a>
+            <% } else { %>
+                <a href="/login" class="<%= pagina === 'login' ? 'ativo' : '' %>">Entrar</a>
+            <% } %>
         </nav>
     </header>
-<main class="conteudo-principal"></main>
+    <main class="conteudo-principal">
