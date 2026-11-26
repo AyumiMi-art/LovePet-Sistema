@@ -1,0 +1,33 @@
+<%- include('partials/header') %>
+
+<section class="pagina-contato">
+    <h2>🐾 Animais Cadastrados</h2>
+    <p>Confira todos os pets registrados no sistema LovePet.</p>
+
+    <% if (!locals.animais || animais.length === 0) { %>
+        <p class="sem-noticias">Nenhum animal cadastrado no momento.</p>
+    <% } else { %>
+        <div class="destaques">
+            <% animais.forEach(pet => { %>
+                <div class="card">
+                    <span class="categoria"><%= pet.disponivel ? 'Disponível' : 'Indisponível / Em Adoção' %></span>
+                    <h3><%= pet.nome %> (<%= pet.tipo %>)</h3>
+                    <p><strong>Raça:</strong> <%= pet.raca || 'SRD' %> • <strong>Porte:</strong> <%= pet.porte %></p>
+                    <p><strong>Sexo:</strong> <%= pet.sexo === 'M' ? 'Macho' : 'Fêmea' %></p>
+                    
+                    <% if (pet.breve_descricao) { %>
+                        <p style="margin-top: 0.5rem; color: #555;"><%= pet.breve_descricao %></p>
+                    <% } %>
+
+                    <p style="margin-top: 0.6rem; font-size: 0.9rem; color: #288369;">
+                        Vacinado: <%= pet.vacinado ? 'Sim' : 'Não' %> | 
+                        Castrado: <%= pet.castrado ? 'Sim' : 'Não' %> | 
+                        Sociável: <%= pet.sociavel ? 'Sim' : 'Não' %>
+                    </p>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</section>
+
+<%- include('partials/footer') %>

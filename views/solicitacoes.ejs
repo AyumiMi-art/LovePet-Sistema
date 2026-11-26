@@ -2,8 +2,7 @@
 
 <section class="pagina-contato">
     <h2>🐾 Painel de Solicitações</h2>
-    <p>Bem-vindo, <strong><%= usuario.nome %></strong>! Selecione um animal disponível para registrar uma solicitação.</p>
-
+    <p>Bem-vindo, <strong><%= usuario ? usuario.nome : 'Visitante' %></strong>! Selecione um animal disponível para registrar uma solicitação.</p>
     <form action="/solicitacoes" method="POST" class="formulario-contato" style="margin-bottom: 2.5rem;">
         <h3 style="margin-bottom: 1rem; color: #1a1a2e;">Nova Solicitação de Adoção</h3>
 
